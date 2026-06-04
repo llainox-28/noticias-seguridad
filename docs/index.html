@@ -1,131 +1,456 @@
 <!DOCTYPE html>
-<html lang='es'>
+<html lang="es">
 <head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-<title>Noticias Seguridad Electronica</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security Intelligence — X-28</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Arial, sans-serif; background: #f0f2f5; color: #333; }
-header { background: #1a1a2e; color: white; padding: 20px 40px; }
-header h1 { font-size: 24px; }
-header p { color: #aaa; font-size: 14px; margin-top: 5px; }
-.container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
-.categoria { margin-bottom: 40px; }
-.categoria h2 { color: #1a1a2e; border-left: 4px solid #e74c3c; padding-left: 12px; margin-bottom: 16px; font-size: 18px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-.tarjeta { background: white; border-radius: 8px; padding: 16px; text-decoration: none; color: inherit; display: block; border: 1px solid #e0e0e0; transition: box-shadow 0.2s; }
-.tarjeta:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-.tarjeta h3 { font-size: 15px; color: #1a1a2e; margin: 8px 0; line-height: 1.4; }
-.tarjeta p { font-size: 13px; color: #666; line-height: 1.5; }
-.fecha { font-size: 11px; color: #e74c3c; font-weight: bold; }
-.sin-datos { color: #999; font-style: italic; }
-footer { text-align: center; padding: 20px; color: #999; font-size: 12px; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f4f6f9;
+    color: #1a1a2e;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    padding: 48px 40px 40px;
+    text-align: center;
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    color: #e94560;
+    border: 1px solid rgba(233,69,96,0.3);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    color: white;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .header h1 span { color: #e94560; }
+  .header-sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    font-weight: 300;
+  }
+  .header-date {
+    margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 20px;
+    border-radius: 30px;
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+  }
+  .dot-live {
+    width: 7px; height: 7px;
+    background: #2ecc71;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* CONTENIDO */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  .seccion {
+    margin-bottom: 48px;
+  }
+  .seccion-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e94560;
+  }
+  .seccion-icon {
+    color: #e94560;
+    font-size: 10px;
+  }
+  .seccion-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a2e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid #eaecf0;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: #e94560;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+    border-color: #e94560;
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .fuente {
+    font-size: 10px;
+    font-weight: 600;
+    color: #e94560;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .fecha-card {
+    font-size: 10px;
+    color: #aaa;
+  }
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a2e;
+    line-height: 1.5;
+  }
+  .card p {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+  .leer-mas {
+    font-size: 11px;
+    font-weight: 600;
+    color: #e94560;
+    margin-top: 4px;
+  }
+
+  .sin-datos {
+    color: #bbb;
+    font-style: italic;
+    font-size: 13px;
+    padding: 20px 0;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #1a1a2e;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    padding: 24px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+  footer span { color: #e94560; }
 </style>
 </head>
 <body>
-<header>
-<h1>Noticias de Seguridad Electronica</h1>
-<p>Actualizado: 04/06/2026 15:02</p>
-</header>
-<div class='container'>
-<div class='categoria'><h2>Seguridad Electronica Argentina</h2><div class='grid'><a href='https://www.perfil.com/noticias/opinion/como-crece-la-inversion-en-seguridad-electronica-en-los-hogares-argentinos.phtml' target='_blank' class='tarjeta'>
-                <div class='fecha'>16 oct 2025</div>
-                <h3>Cómo crece la inversión en seguridad electrónica en los hogares argentinos</h3>
-                <p>Según el informe de IMARC Group, el mercado latinoamericano de seguridad electrónica alcanzó los US$4.11 mil millones en 2024 y se proyecta...</p>
-                </a><a href='https://tn.com.ar/economia/2025/11/03/cuanto-cobra-un-empleado-de-seguridad-privada-en-noviembre-de-2025/' target='_blank' class='tarjeta'>
-                <div class='fecha'>3 nov 2025</div>
-                <h3>Cuánto cobra un empleado de seguridad privada en noviembre de 2025, con aumento confirmado</h3>
-                <p>Conocé los salarios que se pagan en el sector, según la Unión Personal de Seguridad de la República Argentina.</p>
-                </a><a href='https://www.infobae.com/inhouse/2025/11/20/adquisicion-clave-impulsa-el-mercado-de-alarmas-en-la-argentina/' target='_blank' class='tarjeta'>
-                <div class='fecha'>19 nov 2025</div>
-                <h3>Adquisición clave impulsa el mercado de alarmas en la Argentina</h3>
-                <p>La empresa de seguridad Prosegur Alarms adquirió la cartera de alarmas monitoreadas residenciales y de comercios minoristas de USS,...</p>
-                </a><a href='https://www.argentina.gob.ar/noticias/acuerdos-historicos-entre-argentina-y-estados-unidos' target='_blank' class='tarjeta'>
-                <div class='fecha'>28 jul 2025</div>
-                <h3>Acuerdos históricos entre Argentina y Estados Unidos</h3>
-                <p>La Ministra de Seguridad Nacional, Patricia Bullrich, y la Secretaria de Seguridad Nacional de Estados Unidos, Kristi Noem,...</p>
-                </a></div></div><div class='categoria'><h2>Alarmas y Hogares Argentina</h2><div class='grid'><a href='https://www.perfil.com/noticias/opinion/como-crece-la-inversion-en-seguridad-electronica-en-los-hogares-argentinos.phtml' target='_blank' class='tarjeta'>
-                <div class='fecha'>16 oct 2025</div>
-                <h3>Cómo crece la inversión en seguridad electrónica en los hogares argentinos</h3>
-                <p>Según el informe de IMARC Group, el mercado latinoamericano de seguridad electrónica alcanzó los US$4.11 mil millones en 2024 y se proyecta...</p>
-                </a><a href='https://www.fortunebusinessinsights.com/es/smart-home-security-market-109801' target='_blank' class='tarjeta'>
-                <div class='fecha'>hace 3 semanas</div>
-                <h3>Tamaño del mercado de seguridad para el hogar inteligente, participación | Informe de la industria [2034]</h3>
-                <p>El tamaño del mercado mundial de seguridad para el hogar inteligente se valoró en 33.200 millones de dólares en 2025 y se prevé que crezca...</p>
-                </a><a href='https://www.infobae.com/inhouse/2025/11/20/adquisicion-clave-impulsa-el-mercado-de-alarmas-en-la-argentina/' target='_blank' class='tarjeta'>
-                <div class='fecha'>19 nov 2025</div>
-                <h3>Adquisición clave impulsa el mercado de alarmas en la Argentina</h3>
-                <p>La empresa de seguridad Prosegur Alarms adquirió la cartera de alarmas monitoreadas residenciales y de comercios minoristas de USS,...</p>
-                </a><a href='https://www.noticiasnqn.com.ar/noticias/2026/02/21/328396-alarma-por-el-endeudamiento-de-las-familias-la-morosidad-se-triplico-en-un-ano-y-llego-al-9_3por_ciento' target='_blank' class='tarjeta'>
-                <div class='fecha'>21 feb 2026</div>
-                <h3>Alarma por el endeudamiento de las familias: la morosidad se triplicó en un año y llegó al 9,3%</h3>
-                <p>El incumplimiento en préstamos personales y tarjetas de crédito se disparó durante 2025. Un informe del Banco Central de la República...</p>
-                </a></div></div><div class='categoria'><h2>Seguridad Privada Argentina</h2><div class='grid'><a href='https://www.infobae.com/colombia/2026/04/15/crecen-las-muertes-violentas-en-colombia-gremio-de-la-seguridad-privada-pide-mayor-colaboracion-y-tecnologia/' target='_blank' class='tarjeta'>
-                <div class='fecha'>hace 1 mes</div>
-                <h3>Crecen las muertes violentas en Colombia: gremio de la seguridad privada pide mayor colaboración y tecnología</h3>
-                <p>Con cifras de Medicina Legal, el sector impulsa un llamado de varios gremios para sumar esfuerzos públicos y privados.</p>
-                </a><a href='https://nuevodiarioweb.com.ar/deportes/info-santiago-estero-central-argentino-incorporo-seguridad-privada-para-reforzar-el-cuidado-del-club.htm' target='_blank' class='tarjeta'>
-                <div class='fecha'>27 dic 2025</div>
-                <h3>Central Argentino incorporó seguridad privada para reforzar el cuidado del club</h3>
-                <p>La institución anunció una nueva medida orientada a mejorar la protección de quienes asisten diariamente a las actividades deportivas y a...</p>
-                </a><a href='https://laplataya.com.ar/2025/10/16/securion-empresa-argentina-lider-en-seguridad-privada-presento-un-dron-que-recorre-40-000-metros-en-30-segundos/' target='_blank' class='tarjeta'>
-                <div class='fecha'>16 oct 2025</div>
-                <h3>Securion, empresa argentina líder en seguridad privada presento un dron que recorre 40.000 metros en 30 segundos</h3>
-                <p>Securion, empresa argentina líder en seguridad privada y tecnología aplicada, es la empresa de seguridad oficial y sponsor del 61° Coloquio...</p>
-                </a><a href='https://www.iprofesional.com/management/442913-cual-es-el-sueldo-de-un-empleado-de-seguridad-privada-en-diciembre-2025' target='_blank' class='tarjeta'>
-                <div class='fecha'>28 nov 2025</div>
-                <h3>Cuál es el sueldo de un empleado de seguridad privada en diciembre 2025</h3>
-                <p>Los trabajadores de este sector recibieron un reajuste este mes. Las cifras para cada categoría y los detalles sobre la suma fija.</p>
-                </a></div></div><div class='categoria'><h2>CCTV y Camaras Argentina</h2><div class='grid'><a href='https://noticias.perfil.com/noticias/espacio-no-editorial/camaras-inteligentes-en-argentina-como-instalarlas-en-minutos-y-controlarlas-desde-el-celular.phtml' target='_blank' class='tarjeta'>
-                <div class='fecha'>21 ago 2025</div>
-                <h3>Cámaras inteligentes en Argentina: cómo instalarlas en minutos y controlarlas desde el celular</h3>
-                <p>Frente al aumento de robos, crece la demanda de cámaras de vigilancia económicas y fáciles de usar. Modelos sin cableado, con visión...</p>
-                </a><a href='https://www.fortunebusinessinsights.com/es/cctv-camera-market-107115' target='_blank' class='tarjeta'>
-                <div class='fecha'>hace 1 mes</div>
-                <h3>Tamaño y crecimiento del mercado de cámaras CCTV | Informe Global [2026-2024]</h3>
-                <p>Tamaño del mercado de cámaras CCTV, participación y análisis de la industria, por tipo de cámara (CCTV de caja, CCTV tipo bala, CCTV domo,...</p>
-                </a><a href='https://www.tecnoseguro.com/faqs/cctv/mejores-camaras-para-exteriores' target='_blank' class='tarjeta'>
-                <div class='fecha'>4 dic 2025</div>
-                <h3>Mejores cámaras para exteriores: Guía de compra 2025 para hogares y SMB</h3>
-                <p>Conoce las mejores cámaras de seguridad para exteriores: cómo elegir, comparativa de modelos top, consejos para instalación y qué...</p>
-                </a><a href='https://www.0223.com.ar/nota/2025-11-9-17-0-0-camaras-de-seguridad-en-mar-del-plata-todo-lo-que-tenes-que-saber-para-instalarla-en-tu-casa-o-negocio' target='_blank' class='tarjeta'>
-                <div class='fecha'>9 nov 2025</div>
-                <h3>Cámaras de seguridad en Mar del Plata: todo lo que tenés que saber para instalarla en tu casa o negocio</h3>
-                <p>En un contexto donde la inseguridad se convirtió en una de las principales preocupaciones de los marplatenses, la instalación de cámaras de...</p>
-                </a></div></div><div class='categoria'><h2>Seguridad Electronica Mundial</h2><div class='grid'><a href='https://www.bbc.com/mundo/articles/cvg80dv88rgo' target='_blank' class='tarjeta'>
-                <div class='fecha'>20 mar 2026</div>
-                <h3>Cómo funciona la red trasnacional de espionaje y acoso a opositores del gobierno de Ortega y Murillo en Nicaragua, según la ONU</h3>
-                <p>Reed Brody, integrante del Grupo de Expertos de la ONU, dice que "Nicaragua padece de un olvido, y ese olvido ayuda a una dictadura".</p>
-                </a><a href='https://www.welivesecurity.com/es/cibercrimen/10-ciberataques-filtraciones-de-datos-marcaron-2025/' target='_blank' class='tarjeta'>
-                <div class='fecha'>11 dic 2025</div>
-                <h3>10 ciberataques y filtraciones de datos que marcaron el 2025</h3>
-                <p>Durante todo el año sucedieron incidentes que marcaron el panorama global y regional a nivel ciberseguridad. En este post, los casos más...</p>
-                </a><a href='https://www.infobae.com/america/mundo/2025/12/13/australia-prohibio-las-redes-sociales-a-menores-de-16-anos-pero-los-expertos-temen-que-huyan-a-plataformas-mas-peligrosas/' target='_blank' class='tarjeta'>
-                <div class='fecha'>12 dic 2025</div>
-                <h3>Australia prohibió las redes sociales a menores de 16 años, pero los expertos temen que huyan a plataformas más peligrosas</h3>
-                <p>Mientras el país se convierte en el primero en implementar la restricción con multas millonarias, especialistas como el argentino Gabriel...</p>
-                </a><a href='https://mundogremial.com/paritarias-upsra-se-confirman-aumentos-y-nuevas-escalas-para-vigiladores-de-seguridad-privada/' target='_blank' class='tarjeta'>
-                <div class='fecha'>26 sept 2025</div>
-                <h3>Paritarias UPSRA: Se confirman aumentos y nuevas escalas para vigiladores de seguridad privada</h3>
-                <p>La UPSRA acordó aumentos de sueldos para vigiladores de seguridad privada, estableciendo las nuevas escalas salariales tras negociación con...</p>
-                </a></div></div><div class='categoria'><h2>Smart Home y Tecnologia</h2><div class='grid'><a href='https://www.fortunebusinessinsights.com/es/industry-reports/smart-home-market-101900' target='_blank' class='tarjeta'>
-                <div class='fecha'>hace 1 semana</div>
-                <h3>Informe de pronóstico, participación y tamaño del mercado de hogares inteligentes, 2032</h3>
-                <p>Se prevé que el tamaño del mercado mundial de hogares inteligentes crezca de 147.520 millones de dólares en 2025 a 848.470 millones de...</p>
-                </a><a href='https://institucional.telecom.com.ar/prensa/noticias/nota/null/884' target='_blank' class='tarjeta'>
-                <div class='fecha'>26 mar 2026</div>
-                <h3>PERSONAL LANZA LA NUEVA CÁMARA WIFI FIJA</h3>
-                <p>Continúa ampliando su ecosistema Smarthome. PERSONAL LANZA LA NUEVA CÁMARA WIFI FIJA La nueva Cámara WiFi Fija se suma al ecosistema de...</p>
-                </a><a href='https://www.fortunebusinessinsights.com/es/smart-home-security-market-109801' target='_blank' class='tarjeta'>
-                <div class='fecha'>hace 3 semanas</div>
-                <h3>Tamaño del mercado de seguridad para el hogar inteligente, participación | Informe de la industria [2034]</h3>
-                <p>El tamaño del mercado mundial de seguridad para el hogar inteligente se valoró en 33.200 millones de dólares en 2025 y se prevé que crezca...</p>
-                </a><a href='https://www.infobae.com/tecno/2025/12/10/top-10-de-las-palabras-de-tecnologia-mas-usadas-este-2025-segun-google/' target='_blank' class='tarjeta'>
-                <div class='fecha'>9 dic 2025</div>
-                <h3>Top 10 de las palabras de tecnología más usadas este 2025, según Google</h3>
-                <p>La inteligencia artificial fue el término tecnológico más buscado en la red, especialmente los denominados Agentes IA.</p>
-                </a></div></div>
+
+<div class="header">
+  <div class="header-badge">Security Intelligence</div>
+  <h1>Radar de <span>Seguridad Electrónica</span></h1>
+  <p class="header-sub">Monitoreo · Alarmas · Cámaras · Mercado · Tecnología</p>
+  <div class="header-date">
+    <div class="dot-live"></div>
+    Actualizado el 04/06/2026 a las 15:20 hs
+  </div>
 </div>
-<footer>Actualizado automaticamente todos los dias</footer>
-</body></html>
+
+<div class="container">
+  
+        <div class="seccion">
+          <div class="seccion-header">
+            <span class="seccion-icon">●</span>
+            <h2>Monitoreo y Teleasistencia</h2>
+          </div>
+          <div class="grid">
+        
+            <a href="https://www.infobae.com/judiciales/2026/05/29/le-entraron-a-robar-demando-a-la-empresa-de-alarmas-y-perdio-el-juicio-por-que-la-justicia-fallo-a-favor-de-la-compania/" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">Infobae</span>
+                <span class="fecha-card">hace 6 días</span>
+              </div>
+              <h3>Le entraron a robar, demandó a la empresa de alarmas y perdió el juicio: por qué la Justicia falló a favor de la compañía</h3>
+              <p>Tras sufrir un asalto en su casa, una mujer demandó a la compañía reclamando una indemnización. Sin embargo, la Cámara de Apelaciones...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://agenciasanluis.com/2026/03/28/1152227-avanzan-en-la-implementacion-de-la-vigilancia-electronica-para-personas-con-prision-domiciliaria/" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">Agencia de Noticias San Luis</span>
+                <span class="fecha-card">28 mar 2026</span>
+              </div>
+              <h3>Avanzan en la implementación de la vigilancia electrónica para personas con prisión domiciliaria</h3>
+              <p>Durante los días 26 y 27 de marzo, la dirección de Asistencia a Personas Bajo Vigilancia Electrónica, dependiente del ministerio de...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://www.diariodemocracia.com/ciudad/junin/333438-vigilancia-compartida-el-modelo-de-los-barrios-que/" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">Diario Democracia</span>
+                <span class="fecha-card">31 ene 2026</span>
+              </div>
+              <h3>Vigilancia compartida: el modelo de los barrios que se organizan para reforzar la prevención</h3>
+              <p>El programa municipal “Ojos en alerta”, así como un novedoso sistema vecinal en el barrio Proyecto Alvear.</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://www.ambito.com/opiniones/seguridad-casa-cuanto-hay-que-invertir-hoy-instalar-una-alarma-argentina-n6257914" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">Ambito</span>
+                <span class="fecha-card">19 mar 2026</span>
+              </div>
+              <h3>Seguridad en casa: ¿cuánto hay que invertir hoy para instalar una alarma en Argentina?</h3>
+              <p>Con el aumento de la preocupación por la inseguridad, cada vez más hogares analizan instalar sistemas de alarma. Cuánto cuesta hoy equipar...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                </div></div>
+        <div class="seccion">
+          <div class="seccion-header">
+            <span class="seccion-icon">●</span>
+            <h2>Alarmas Residenciales y Comerciales</h2>
+          </div>
+          <div class="grid">
+        <p class='sin-datos'>Sin noticias disponibles en este momento.</p></div></div>
+        <div class="seccion">
+          <div class="seccion-header">
+            <span class="seccion-icon">●</span>
+            <h2>Camaras y Videovigilancia</h2>
+          </div>
+          <div class="grid">
+        
+            <a href="https://www.fortunebusinessinsights.com/es/cctv-camera-market-107115" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">Fortune Business Insights</span>
+                <span class="fecha-card">hace 1 mes</span>
+              </div>
+              <h3>Tamaño y crecimiento del mercado de cámaras CCTV | Informe Global [2026-2024]</h3>
+              <p>El tamaño del mercado mundial de cámaras CCTV está valorado en 66 010 millones de dólares en 2026 y se prevé que alcance los 228 650...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://www.infobae.com/tecno/2026/01/13/alarmas-y-camaras-inteligentes-hasta-donde-llega-la-ia-y-cuando-sigue-siendo-clave-la-presencia-humana/" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">Infobae</span>
+                <span class="fecha-card">13 ene 2026</span>
+              </div>
+              <h3>Alarmas y cámaras inteligentes: hasta dónde llega la IA y cuándo sigue siendo clave la presencia humana</h3>
+              <p>Seguridad electrónica en 2026: el auge de la IA y el IoT redefine alarmas, cámaras y la protección del futuro - (Imagen Ilustrativa Infobae).</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://latinta.com.ar/2026/05/04/seguridad-alarmas-ecosistemas-inteligentes/" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">La tinta</span>
+                <span class="fecha-card">hace 1 mes</span>
+              </div>
+              <h3>La evolución de los sistemas de seguridad: de las alarmas a los ecosistemas inteligentes</h3>
+              <p>Para quienes buscan alarmas para casa, la elección se trata de elegir un socio inteligente que se integre a la perfección en un estilo de...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://www.lt9.com.ar/a-principio-de-2026-se-compraran-2-000-camaras-de-videovigilancia-para-la-ciudad-de-santa-fe/" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">lt9.com.ar</span>
+                <span class="fecha-card">22 dic 2025</span>
+              </div>
+              <h3>A principio de 2026 se comprarán 2.000 cámaras de videovigilancia para la ciudad de Santa Fe</h3>
+              <p>Será en el marco de una licitación acelerada, cuya inversión supera los 32 millones de dólares. Se incluye la provisión, instalación y...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                </div></div>
+        <div class="seccion">
+          <div class="seccion-header">
+            <span class="seccion-icon">●</span>
+            <h2>Mercado y Metricas del Sector</h2>
+          </div>
+          <div class="grid">
+        
+            <a href="https://portalinnova.cl/argentina-el-peligro-de-onlyfans-en-argentina-alertan-por-robo-de-datos-biometricos-de-usuarios-y-destruccion-de-privacidad/" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">Portal Innova</span>
+                <span class="fecha-card">hace 1 día</span>
+              </div>
+              <h3>Argentina | El peligro de OnlyFans en Argentina: alertan por robo de datos biométricos de usuarios y destrucción de privacidad</h3>
+              <p>La acelerada transformación de las tecnologías de la información modificó de manera profunda el mercado laboral en todo el mundo.</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://www.fortunebusinessinsights.com/es/tokenization-market-107201" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">Fortune Business Insights</span>
+                <span class="fecha-card">hace 2 semanas</span>
+              </div>
+              <h3>Tamaño, participación y pronóstico del mercado de tokenización | Informe Global [2034]</h3>
+              <p>La creciente demanda de pasarelas de pago seguras es una tendencia clave. Las organizaciones necesitan gestionar su seguridad para proteger...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://www.infobae.com/espana/2026/01/07/espana-crecera-y-generara-mas-empleo-que-la-media-europea-en-2026-pero-la-productividad-seguira-sin-remontar/" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">Infobae</span>
+                <span class="fecha-card">6 ene 2026</span>
+              </div>
+              <h3>España crecerá y generará más empleo que la media europea en 2026, pero la productividad seguirá sin remontar</h3>
+              <p>El mercado laboral español mantendrá su impulso en 2026, con previsiones al alza de creación de empleo y reducción de la tasa de paro,...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://www.fortunebusinessinsights.com/es/sales-intelligence-market-109103" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">Fortune Business Insights</span>
+                <span class="fecha-card">hace 3 semanas</span>
+              </div>
+              <h3>Tamaño, participación y estadísticas del mercado de inteligencia de ventas 2026-2034</h3>
+              <p>El mercado mundial de inteligencia de ventas se valoró en 4.850 millones de dólares en 2025 y se espera que crezca de 5.370 millones de...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                </div></div>
+        <div class="seccion">
+          <div class="seccion-header">
+            <span class="seccion-icon">●</span>
+            <h2>Tecnologia e Innovacion</h2>
+          </div>
+          <div class="grid">
+        
+            <a href="https://www.infobae.com/tecno/2026/01/13/alarmas-y-camaras-inteligentes-hasta-donde-llega-la-ia-y-cuando-sigue-siendo-clave-la-presencia-humana/" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">Infobae</span>
+                <span class="fecha-card">13 ene 2026</span>
+              </div>
+              <h3>Alarmas y cámaras inteligentes: hasta dónde llega la IA y cuándo sigue siendo clave la presencia humana</h3>
+              <p>Seguridad electrónica en 2026: el auge de la IA y el IoT redefine alarmas, cámaras y la protección del futuro - (Imagen Ilustrativa Infobae).</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://www.fortunebusinessinsights.com/es/smart-home-security-market-109801" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">Fortune Business Insights</span>
+                <span class="fecha-card">hace 3 semanas</span>
+              </div>
+              <h3>Tamaño del mercado de seguridad para el hogar inteligente, participación | Informe de la industria [2034]</h3>
+              <p>El tamaño del mercado mundial de seguridad para el hogar inteligente se valoró en 33.200 millones de dólares en 2025 y se prevé que crezca...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://www.itsitio.com/ar/seguridad/tecnologias-en-seguridad-2026-mas-ia-menos-mitos-que-pueden-y-que-no-hacer-las-nuevas-tecnologias-segun-casel/" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">ITSitio</span>
+                <span class="fecha-card">14 ene 2026</span>
+              </div>
+              <h3>Tecnologías en seguridad 2026: más IA, menos mitos. Qué pueden —y qué no— hacer las nuevas tecnologías según CASEL</h3>
+              <p>La llegada de sistemas basados en inteligencia artificial (IA), la integración de analíticas avanzadas y el crecimiento del IoT están...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://mercado.com.ar/innovacion/grupo-cgm-homologo-medidores-de-agua-con-iot-y-modulo-ewater-para-telereporte" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">mercado.com.ar</span>
+                <span class="fecha-card">25 feb 2026</span>
+              </div>
+              <h3>Grupo CGM homologó medidores de agua con IoT y módulo eWater para telereporte</h3>
+              <p>Grupo CGM obtuvo la homologación de su sistema de medidores de consumo de agua con tecnología IoT, una solución que integra los equipos de...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                </div></div>
+        <div class="seccion">
+          <div class="seccion-header">
+            <span class="seccion-icon">●</span>
+            <h2>Noticias Internacionales del Sector</h2>
+          </div>
+          <div class="grid">
+        
+            <a href="https://www.openpr.com/news/4537746/corrosion-monitoring-market-size-share-industry-analysis" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">openPR.com</span>
+                <span class="fecha-card">hace 9 horas</span>
+              </div>
+              <h3>Corrosion Monitoring Market Size, Share & Industry Analysis</h3>
+              <p>Press release - Data Bridge Market Research - Corrosion Monitoring Market Size, Share & Industry Analysis Report, 2026-2032: Market to Reach...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://www.worldbank.org/en/topic/agriculture/brief/food-security-update" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">World Bank Group</span>
+                <span class="fecha-card">hace 3 días</span>
+              </div>
+              <h3>Food Security | Food Insecurity Statistics & Solutions</h3>
+              <p>The World Bank's response to the food insecurity crisis, the solutions it's working on, including financing food and fertilizer—and...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://www.tradingview.com/news/eqs:84d6b12bc094b:0-market-entry-in-brazil-deutz-expands-its-energy-business-in-latin-america/" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">TradingView</span>
+                <span class="fecha-card">hace 1 semana</span>
+              </div>
+              <h3>Market entry in Brazil: DEUTZ expands its energy business in Latin America</h3>
+              <p>DEUTZ AG/ Key word(s): Takeover. Market entry in Brazil: DEUTZ expands its energy business in Latin America. 27.05.2026 / 23:29 CET/CEST.</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                
+            <a href="https://www.globenewswire.com/news-release/2026/05/21/3299073/28124/en/enterprise-monitoring-industry-report-2026-global-revenue-expected-to-grow-from-30-billion-in-2025-to-92-billion-by-2032.html" target="_blank" class="card">
+              <div class="card-meta">
+                <span class="fuente">GlobeNewswire</span>
+                <span class="fecha-card">hace 2 semanas</span>
+              </div>
+              <h3>Enterprise Monitoring Industry Report 2026: Global Revenue</h3>
+              <p>The market offers significant opportunities through its critical role in modern IT operations, driven by the complexity of IT ecosystems,...</p>
+              <span class="leer-mas">Leer nota →</span>
+            </a>
+                </div></div>
+</div>
+
+<footer>
+  Actualizado automáticamente todos los días · <span>Security Intelligence Dashboard</span>
+</footer>
+
+</body>
+</html>
