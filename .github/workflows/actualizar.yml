@@ -1,0 +1,26 @@
+name: Actualizar noticias
+
+on:
+  schedule:
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - run: python noticias.py
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+      - name: Publicar cambios
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add docs/
+          git commit -m "Noticias actualizadas" || echo "Sin cambios"
+          git push
